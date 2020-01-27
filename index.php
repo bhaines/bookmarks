@@ -41,7 +41,7 @@ $order = set_get_order ();
 		  <li><a href="javascript:bookmarkdelete(checkselected())">Delete Bookmarks</a></li>
 		  <li><a href="./shared.php">Shared Bookmarks</a></li>
 		</ul>
-	
+
 		<h2 class="nav">Folders</h2>
 		<ul class="nav">
 			<li><a href="javascript:foldernew('<?php echo $folderid; ?>')">New Folder</a></li>
@@ -50,7 +50,7 @@ $order = set_get_order ();
 			<li><a href="javascript:folderdelete('<?php echo $folderid; ?>')">Delete Folder</a></li>
 			<li><a href="./index.php?expand=&amp;folderid=0">Collapse All</a></li>
 		</ul>
-	
+
 		<h2 class="nav">Tools</h2>
 		<ul class="nav">
 			<?php if (admin_only ()) { ?>
@@ -80,12 +80,12 @@ $order = set_get_order ();
 
 	          require_once ('./lib/BooleanSearch.php');
 	          $searchfields = array ('url', 'title', 'description');
-	
+
 	          $query = assemble_query ($search, $searchfields);
-	
+
 	          if ($mysql->query ($query)) {
 	                  $bookmarks = array ();
-	                  while ($row = mysql_fetch_assoc ($mysql->result)) {
+	                  while ($row = $mysql->mysql_fetch_assoc ($mysql->result)) {
 	                          array_push ($bookmarks, $row);
 	                  }
 	                  if (count ($bookmarks) > 0) {
@@ -138,7 +138,7 @@ $order = set_get_order ();
 
 	require_once (ABSOLUTE_PATH . "bookmarks.php");
 	$query = sprintf ("SELECT title, url, description, UNIX_TIMESTAMP(date) AS timestamp, id, favicon, public
-		FROM bookmark 
+		FROM bookmark
 		WHERE user='%s'
 		AND childof='%d'
 		AND deleted!='1'
@@ -148,7 +148,7 @@ $order = set_get_order ();
 
 	if ($mysql->query ($query)) {
 		$bookmarks = array ();
-		while ($row = mysql_fetch_assoc ($mysql->result)) {
+		while ($row = $mysql->mysql_fetch_assoc ($mysql->result)) {
 			array_push ($bookmarks, $row);
 		}
 		list_bookmarks ($bookmarks,

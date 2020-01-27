@@ -27,12 +27,12 @@ if (isset ($_SESSION)) {
 
 			# now get the settings.
 			if ($mysql->query ($query)) {
-				$settings = mysql_fetch_assoc ($mysql->result);
+				$settings = $mysql->mysql_fetch_assoc ($mysql->result);
 			}
 			else {
 				message ($mysql->error);
 			}
-		
+
 			unset ($settings['password']);
 		}
 		else {

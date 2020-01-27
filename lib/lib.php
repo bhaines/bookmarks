@@ -139,7 +139,7 @@ function set_title () {
 		$_SESSION['title'] = $session_title;
 		$return = $session_title;
 	}
-	return $return;	
+	return $return;
 }
 
 function set_url () {
@@ -157,7 +157,7 @@ function set_url () {
 		$_SESSION['url'] = $session_url;
 		$return = $session_url;
 	}
-	return $return;	
+	return $return;
 }
 
 #############################################
@@ -290,7 +290,7 @@ function set_post_browser () {
 #########################################################
 
 ###
-### 
+###
 ###
 
 function return_charsets () {
@@ -333,7 +333,7 @@ function check_username ($username) {
 		$query = sprintf ("SELECT COUNT(*) FROM user WHERE md5(username)=md5('%s')",
 			$mysql->escape ($username));
 		if ($mysql->query ($query)) {
-			if (mysql_result ($mysql->result, 0) == 1) {
+			if ($mysql->mysql_result ($mysql->result, 0) == 1) {
 				$return = true;
 			}
 		}
@@ -348,7 +348,7 @@ function admin_only () {
                        AND username='%s'",
                        $mysql->escape ($username));
     if ($mysql->query ($query)) {
-        if (mysql_result ($mysql->result, 0) == "1") {
+        if ($mysql->mysql_result ($mysql->result, 0) == "1") {
             $return = true;
         }
     }
@@ -452,10 +452,10 @@ function object_count () {
 	                          (SELECT COUNT(*) FROM folder   WHERE user='%s') AS folders",
 	                 $mysql->escape ($username),
 	                 $mysql->escape ($username));
-	
+
 	if ($mysql->query ($query)) {
-		if (mysql_num_rows ($mysql->result) == "1") {
-			$row = mysql_fetch_object ($mysql->result);
+		if ($mysql->mysql_num_rows ($mysql->result) == "1") {
+			$row = $mysql->mysql_fetch_object ($mysql->result);
 			$return = "You have $row->bookmarks Bookmarks and $row->folders Folders";
 		}
 	}

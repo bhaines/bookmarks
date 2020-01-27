@@ -46,7 +46,7 @@ class folder {
 		$query = sprintf ("SELECT id, childof, name, public FROM folder WHERE user='%s' AND deleted!='1' ORDER BY name",
 			$mysql->escape ($_SESSION['username']));
 		if ($mysql->query ($query)) {
-			while ($row = mysql_fetch_assoc ($mysql->result)) {
+			while ($row = $mysql->mysql_fetch_assoc ($mysql->result)) {
 				$this->folders[$row['id']] = $row;
 				if (!isset ($this->children[$row['childof']])) {
 					$this->children[$row['childof']] = array ();
@@ -77,7 +77,7 @@ class folder {
 			# 1) $children containing arrays with children. the keys of these arrays are the id's of the parents
 			# 2) $folders containing arrays with folder settings (id, childof, name, public)
 			$shared_children = array ();
-			while ($row = mysql_fetch_assoc ($mysql->result)) {
+			while ($row = $mysql->mysql_fetch_assoc ($mysql->result)) {
 				$this->folders[$row['id']] = $row;
 				if (!isset ($this->children[$row['childof']])) {
 					$this->children[$row['childof']] = array ();
@@ -135,7 +135,7 @@ class folder {
 			$this->level--;
 		}
 	}
- 
+
 	# draws the tree
 	function print_tree () {
 		global $settings, $folder_opened, $folder_closed, $folder_opened_public, $folder_closed_public, $plus, $minus, $neutral;
@@ -298,7 +298,7 @@ class folder {
 	}
 
 	###
-	### returns an array containing all folder id's that 
+	### returns an array containing all folder id's that
 	### are children from a given folder
 	###
 	function get_children ($id) {

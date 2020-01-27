@@ -41,7 +41,7 @@ if ($reg_register) {
 		if (preg_match ('/^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i', $reg_email)) {
 			$query = "SELECT COUNT(*) AS result FROM user WHERE email='$reg_email'";
 			if ($mysql->query ($query)) {
-				if (mysql_result ($result, 0) > 0) {
+				if ($mysql->mysql_result ($result, 0) > 0) {
 					echo '<div style="color:red;">A User Account with this email address aready exists.</div>'."\n";
 					$email = false;
 				}
@@ -73,7 +73,7 @@ if ($reg_register) {
 
 		if (mysql_query ("$query")) {
 			# dieser key wird als username und secret md5 hash an den
-			# user geschickt und für die verifikation der registrierung gebraucht.
+			# user geschickt und fÃ¼r die verifikation der registrierung gebraucht.
 			$key = md5 ($username . $secret);
 
 			$headers = "From: noreply@yourdomain.com\r\n" .
@@ -103,10 +103,10 @@ if ($reg_register) {
 else if ($confirm != '' && strlen ($confirm) === 32) {
 	$query = "SELECT username FROM user WHERE MD5(CONCAT(username,'$secret'))='$confirm' AND active='0'";
 	$result = mysql_query ("$query");
-	if (mysql_num_rows ($result) == 1) {
+	if ($mysql->mysql_num_rows ($result) == 1) {
 		# the registration confirmation was successufull,
 		# thus we can enable the useraccount in the database.
-		$username = mysql_result ($result, 0);
+		$username = $mysql->mysql_result ($result, 0);
 		$query = "UPDATE user SET active='1' WHERE username='$username' AND active='0'";
 		if (mysql_query ($query)) {
 			echo "You are now registered. Happy bookmarking!";

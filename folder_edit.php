@@ -10,13 +10,13 @@ if ($folderid == "" || $folderid == "0"){
 	message ("No Folder selected");
 }
 else if ($foldername == "") {
-	$query = sprintf ("SELECT name, public FROM folder WHERE id='%d' AND user='%s' AND deleted!='1'", 
+	$query = sprintf ("SELECT name, public FROM folder WHERE id='%d' AND user='%s' AND deleted!='1'",
 		$mysql->escape ($folderid),
 		$mysql->escape ($username));
 
 	if ($mysql->query ($query)) {
-		if (mysql_num_rows ($mysql->result) == 1) {
-			$row = mysql_fetch_object ($mysql->result);
+		if ($mysql->mysql_num_rows ($mysql->result) == 1) {
+			$row = $mysql->mysql_fetch_object ($mysql->result);
 		}
 		else {
 			message ("No Folder to edit.");

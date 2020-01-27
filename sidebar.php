@@ -28,7 +28,7 @@ class sidebar {
                         $mysql->escape ($username));
 
                 if ($mysql->query ($query)) {
-                        while ($row = mysql_fetch_assoc ($mysql->result)) {
+                        while ($row = $mysql->mysql_fetch_assoc ($mysql->result)) {
                                 if (!isset ($this->bookmarks[$row['childof']])) {
                                         $this->bookmarks[$row['childof']] = array ();
                                 }

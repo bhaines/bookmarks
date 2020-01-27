@@ -31,7 +31,7 @@ $order = set_get_order ();
 		  <li><a href="./index.php">My Bookmarks</a></li>
 		  <li><a href="./shared.php">Shared Bookmarks</a></li>
 		</ul>
-	
+
 		<h2 class="nav">Tools</h2>
 		<ul class="nav">
 			<?php if (isset ($_SESSION['logged_in']) && $_SESSION['logged_in']) { ?>
@@ -90,7 +90,7 @@ if (isset ($_GET['user']) && check_username ($user)) {
 
     if ($mysql->query ($query)) {
             $bookmarks = array ();
-            while ($row = mysql_fetch_assoc ($mysql->result)) {
+            while ($row = $mysql->mysql_fetch_assoc ($mysql->result)) {
                     array_push ($bookmarks, $row);
             }
             list_bookmarks ($bookmarks,
@@ -112,7 +112,7 @@ if (isset ($_GET['user']) && check_username ($user)) {
     }
 
     ?>
-	
+
 	<!-- Bookmarks ends here. -->
 	</div>
 
@@ -127,7 +127,7 @@ else {
                 ) AS tmp GROUP BY user";
 
         if ($mysql->query ($query)) {
-                while ($row = mysql_fetch_object ($mysql->result)) {
+                while ($row = $mysql->mysql_fetch_object ($mysql->result)) {
                         echo '<p class="shared"><a href="' . $_SERVER['SCRIPT_NAME'] . '?user=' . $row->user . '&folderid=0"><b>' . $row->user . "</b><br>\n";
                         echo "Shares $row->folders Folders and $row->bookmarks Bookmarks</a></p>\n";
                 }

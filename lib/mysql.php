@@ -4,32 +4,47 @@ class mysql {
 
 	var $error = "";
 	var $result = false;
+	var $connection = false;
 
 	function mysql () {
 		global $dsn;
-		if ( ! @mysql_connect ($dsn['hostspec'], $dsn['username'], $dsn['password'])) {
-			$this->error = mysql_error ();
-		}
-		if ( ! @mysql_select_db ($dsn['database'])) {
-			$this->error = mysql_error ();
+		$this->connection = new mysqli($dsn['hostspec'], $dsn['username'], $dsn['password'], $dsn['database']);
+		if ( $this->connection->connect_error ) {
+			$this->error = $this->connection->error  ();
 		}
 	}
 
 	function query ($query) {
-		if ($this->result = mysql_query ($query)) {
+		if ($this->result = $this->connection->query ($query)) {
 			return true;
 		}
 		else{
-			$this->error = mysql_error ();
+			$this->error = $this->connection->error ();
 			return false;
 		}
 	}
 
 	function escape ($string) {
-		return mysql_real_escape_string ($string);
+		return mysqli_real_escape_string ($this->connection, $string);
 	}
 
+	function mysql_result($result, $row) {
+		return $result->fetch_array()[0];
+	}
 
+	function mysql_fetch_assoc($result) {
+		return $result->fetch_assoc();
+	}
+
+	function mysql_num_rows($result) {
+		return $result->num_rows;
+	}
+
+	function mysql_fetch_object($result) {
+		return $result->fetch_object();
+	}
+
+	function mysql_insert_id() {
+		return $result->insert_id;
+	}
 }
-
-?>

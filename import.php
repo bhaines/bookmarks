@@ -14,7 +14,7 @@ logged_in_only ();
 		  <li><a href="./index.php">My Bookmarks</a></li>
 		  <li><a href="./shared.php">Shared Bookmarks</a></li>
 		</ul>
-	
+
 		<h2 class="nav">Tools</h2>
 		<ul class="nav">
 			<?php if (admin_only ()) { ?>
@@ -44,7 +44,7 @@ if (!isset ($_FILES['importfile']['tmp_name']) || $_FILES['importfile']['tmp_nam
 		$default_browser = "netscape";
 	}
 	?>
-	
+
 	<form enctype="multipart/form-data" action="<?php echo $_SERVER['SCRIPT_NAME'];?>" method="post">
 	  <table border="0">
 	    <tr>
@@ -58,7 +58,7 @@ if (!isset ($_FILES['importfile']['tmp_name']) || $_FILES['importfile']['tmp_nam
 	        </select>
 	      </td>
 	    </tr>
-	
+
 	    <tr>
 	      <td>
 	        select File:
@@ -100,18 +100,18 @@ if (!isset ($_FILES['importfile']['tmp_name']) || $_FILES['importfile']['tmp_nam
 	      </td>
 	      <td>
 	    <div style="width:<?php echo $column_width_folder; ?>; height:350px; overflow:auto;">
-	
+
 		<?php
 		require_once (ABSOLUTE_PATH . "folders.php");
 		$tree = new folder;
 		$tree->make_tree (0);
 		$tree->print_tree ();
 		?>
-	
+
 		</div>
 	      </td>
 	    </tr>
-	
+
 	    <tr>
 	      <td>
 	      	<p><input type="button" value=" New Folder " onClick="self.location.href='javascript:foldernew(<?php echo $folderid; ?>)'"></p>
@@ -122,10 +122,10 @@ if (!isset ($_FILES['importfile']['tmp_name']) || $_FILES['importfile']['tmp_nam
 	      <td>
 	      </td>
 	    </tr>
-	
+
 	  </table>
 	</form>
-	
+
 	<?php
 }
 else{
@@ -175,7 +175,7 @@ class import {
 		$this->username = $username;
 		$this->parent_folder = $parentfolder;
 		$this->current_folder = $this->parent_folder;
-		
+
 		$this->folder_depth = array ();
 
 		$this->mysql = $mysql;
@@ -247,7 +247,7 @@ class import {
 				$this->name_bookmark = input_validation (ereg_replace ("^( *<DT><[^>]*>)([^<]*)(.*)", "\\2", $line), $this->charset);
 				$this->url = input_validation (ereg_replace ("([^H]*HREF=\")([^\"]*)(\".*)", "\\2", $line), $this->charset);
 				$this->bookmark_new ();
-				$insert_id = mysql_insert_id ();
+				$insert_id = $mysql->mysql_insert_id ();
 			}
 			# this is a description. it is only being saved
 			# if a bookmark has been saved previously
@@ -282,7 +282,7 @@ class import {
 			$this->mysql->escape ($this->public));
 
 		if ($this->mysql->query ($query)) {
-			$this->current_folder = mysql_insert_id ();
+			$this->current_folder = $mysql->mysql_insert_id ();
 			array_push ($this->folder_depth, $this->current_folder);
 			unset ($this->name_folder);
 			$this->count_folders++;

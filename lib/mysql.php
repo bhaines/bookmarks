@@ -10,7 +10,7 @@ class mysql {
 		global $dsn;
 		$this->connection = new mysqli($dsn['hostspec'], $dsn['username'], $dsn['password'], $dsn['database']);
 		if ( $this->connection->connect_error ) {
-			$this->error = $this->connection->error  ();
+			$this->error = $this->connection->error;
 		}
 	}
 
@@ -19,12 +19,15 @@ class mysql {
 			return true;
 		}
 		else{
-			$this->error = $this->connection->error ();
+			$this->error = $this->connection->error;
 			return false;
 		}
 	}
 
 	function escape ($string) {
+		if (! $this->connection) {
+			$this->mysql();
+		}
 		return mysqli_real_escape_string ($this->connection, $string);
 	}
 
@@ -44,7 +47,7 @@ class mysql {
 		return $result->fetch_object();
 	}
 
-	function mysql_insert_id() {
-		return $result->insert_id;
+	function insert_id() {
+		return $this->connection->insert_id;
 	}
 }

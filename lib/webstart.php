@@ -33,23 +33,13 @@ if ( ini_get( 'register_globals' ) ) {
 }
 
 function &fix_magic_quotes( &$arr ) {
-	if ( get_magic_quotes_gpc() ) {
-		foreach( $arr as $key => $val ) {
-			if( is_array( $val ) ) {
-				fix_magic_quotes( $arr[$key] );
-			} else {
-				$arr[$key] = stripslashes( $val );
-			}
-		}
-	}
+        foreach( $arr as $key => $val ) {
+                if( is_array( $val ) ) {
+                        fix_magic_quotes( $arr[$key] );
+                } else {
+                        $arr[$key] = stripslashes( $val );
+                }
+        }
+
 	return $arr;
 }
-
-fix_magic_quotes( $_COOKIE );
-fix_magic_quotes( $_ENV );
-fix_magic_quotes( $_GET );
-fix_magic_quotes( $_POST );
-fix_magic_quotes( $_REQUEST );
-
-
-?>

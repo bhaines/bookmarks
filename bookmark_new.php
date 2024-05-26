@@ -79,7 +79,7 @@ else {
 
 	if ($mysql->query ($query)) {
 		echo "Bookmark successfully created<br>\n";
-		$bm_id = $mysql->mysql_insert_id ();
+		$bm_id = $mysql->insert_id ();
 	}
 	else {
 		message ($mysql->error);

@@ -4,8 +4,17 @@ if (basename ($_SERVER['SCRIPT_NAME']) == basename (__FILE__)) {
 }
 
 class folder {
+	public $username;
+	public $folderid;
+	public $expand;
+	public $folders;
+	public $tree;
+	public $get_children;
+	public $level;
+	public $foreign_username;
+	public $children;
 
-	function folder ($user = false) {
+	function __construct($user = false) {
 		global $settings, $username, $folderid, $expand;
 
 		$this->username = $username;
@@ -16,6 +25,7 @@ class folder {
 		$this->get_children = array ();
 		$this->level = 0;
 		$this->foreign_username = false;
+		$this->children = array ();
 
 		if ($user) {
 			$this->get_shared_data ($user);
